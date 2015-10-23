@@ -64,6 +64,14 @@ public class TestServerAuthModule implements ServerAuthModule {
 
     @Override
     public AuthStatus secureResponse(MessageInfo messageInfo, Subject serviceSubject) throws AuthException {
+    	try {
+    		// java:global/glassfish-sam-ee-namespaces/EJBBean does work
+			EJBBean ejbBean = (EJBBean) new InitialContext().lookup("java:module/EJBBean");
+			System.out.println("SAM SR: " + ejbBean.hello());
+		} catch (NamingException e) {
+			System.out.println("SAM SR: Exception");
+			e.printStackTrace();
+		}
         return SEND_SUCCESS;
     }
 

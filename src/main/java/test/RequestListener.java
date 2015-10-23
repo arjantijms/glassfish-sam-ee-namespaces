@@ -14,7 +14,7 @@ public class RequestListener implements ServletRequestListener {
 		try {
 			EJBBean ejbBean = (EJBBean) new InitialContext().lookup("java:module/EJBBean");
 			
-			System.out.println("RequestListener: " + ejbBean.hello());
+			System.out.println("RequestListener initialized: " + ejbBean.hello());
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -23,7 +23,13 @@ public class RequestListener implements ServletRequestListener {
 	
 	@Override
 	public void requestDestroyed(ServletRequestEvent sre) {
-		
+		try {
+			EJBBean ejbBean = (EJBBean) new InitialContext().lookup("java:module/EJBBean");
+			
+			System.out.println("RequestListener destroyed: " + ejbBean.hello());
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
